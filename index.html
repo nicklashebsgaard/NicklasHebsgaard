@@ -401,7 +401,7 @@ section { padding: 120px 60px; }
 }
 .timeline {
   position: relative;
-  padding-left: 40px;
+  padding-left: 0px;
 }
 .timeline::before {
   content: ‘’;
@@ -562,15 +562,35 @@ section { padding: 120px 60px; }
 
   .nav-links {
     display: none;
-    position: fixed; inset: 0; top: 0;
-    background: var(--off-white);
-    flex-direction: column; align-items: center; justify-content: center;
-    gap: 36px; z-index: 150;
+    order: 3;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
   }
   .nav-links.open { display: flex; }
   .nav-links a {
     font-size: 1.2rem;
     letter-spacing: 0.15em;
+  }
+
+  nav.menu-open {
+    position: fixed;
+    inset: 0;
+    z-index: 50000;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--off-white);
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+  }
+  nav.menu-open .nav-logo { order: 1; flex: 1; }
+  nav.menu-open .nav-burger { order: 2; }
+  nav.menu-open .nav-links.open {
+    position: static;
+    min-height: calc(100dvh - 80px);
   }
 
   .hero { grid-template-columns: 1fr; min-height: auto; }
@@ -598,7 +618,7 @@ section { padding: 120px 60px; }
 @media (max-width: 600px) {
   .hero-left { min-height: 70vw; }
   .hero-contacts { flex-direction: column; gap: 12px; }
-
+  .hero-right { padding: 48px 0px 60px; }
   .about-stat-row { justify-content: space-between; gap: 0; }
 
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
@@ -608,6 +628,7 @@ section { padding: 120px 60px; }
   .section-title { margin-bottom: 40px; }
 
   .timeline-item::before { left: -32px; }
+  .timeline { padding-left: 0px; }
 
   .letter-content p:first-of-type::first-letter {
     font-size: 2.8rem;
@@ -716,6 +737,11 @@ section { padding: 120px 60px; }
   transition: color 0.2s;
 }
 .exit-close:hover { color: var(--brown-dark); }
+
+@media (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
 </style>
 
 </head>
@@ -982,31 +1008,35 @@ section { padding: 120px 60px; }
   </footer>
 
   <script>
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animCursor() {
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-      rx += (mx - rx) * 0.14;
-      ry += (my - ry) * 0.14;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(animCursor);
-    }
-    animCursor();
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
-    document.querySelectorAll('a, button, .skill-card, .skill-tag').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
-        ring.style.width = '60px'; ring.style.height = '60px';
+    if (!isTouchDevice) {
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursorRing');
+      let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+      function animCursor() {
+        cursor.style.left = mx + 'px';
+        cursor.style.top = my + 'px';
+        rx += (mx - rx) * 0.14;
+        ry += (my - ry) * 0.14;
+        ring.style.left = rx + 'px';
+        ring.style.top = ry + 'px';
+        requestAnimationFrame(animCursor);
+      }
+      animCursor();
+
+      document.querySelectorAll('a, button, .skill-card, .skill-tag').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+          ring.style.width = '60px'; ring.style.height = '60px';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+          ring.style.width = '36px'; ring.style.height = '36px';
+        });
       });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-        ring.style.width = '36px'; ring.style.height = '36px';
-      });
-    });
+    }
 
     const bar = document.getElementById('progressBar');
     window.addEventListener('scroll', () => {
@@ -1071,11 +1101,13 @@ section { padding: 120px 60px; }
     burger.addEventListener('click', () => {
       burger.classList.toggle('open');
       navLinks.classList.toggle('open');
+      nav.classList.toggle('menu-open');
     });
     navLinks.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         burger.classList.remove('open');
         navLinks.classList.remove('open');
+        nav.classList.remove('menu-open');
       });
     });
 
@@ -1093,9 +1125,24 @@ section { padding: 120px 60px; }
       exitOverlay.classList.remove('active');
     }
 
-    document.addEventListener('mouseleave', e => {
-      if (e.clientY < 10) showExit();
-    });
+    if (!isTouchDevice) {
+      document.addEventListener('mouseleave', e => {
+        if (e.clientY < 10) showExit();
+      });
+    } else {
+      const footer = document.querySelector('.contact-footer');
+      if (footer) {
+        const footerPopupObs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setTimeout(showExit, 1500);
+              footerPopupObs.disconnect();
+            }
+          });
+        }, { threshold: 0.3 });
+        footerPopupObs.observe(footer);
+      }
+    }
 
     exitClose.addEventListener('click', hideExit);
     exitDismiss.addEventListener('click', hideExit);
