@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nicklas Hebsgaard - Frontend Udvikler</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brown-dark: #3a2318;
+    --brown-mid: #5c3d2e;
+    --brown-warm: #8b5e4a;
+    --tan: #c9a882;
+    --cream: #f5ede3;
+    --off-white: #faf7f4;
+    --text-dark: #1e1209;
+    --text-muted: #7a6050;
+  }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--off-white);
+  color: var(--text-dark);
+  font-family: ‘DM Sans’, sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--brown-warm);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 100001;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, background 0.2s;
+}
+.cursor-ring {
+  width: 24px; height: 24px;
+  border: 1.5px solid var(--brown-warm);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 100000;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.2s, height 0.2s;
+  opacity: 0.5;
+}
+body:hover .cursor { opacity: 1; }
+
+body::before {
+  content: ‘’;
+  position: fixed; inset: 0;
+  background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.035’/%3E%3C/svg%3E”);
+  pointer-events: none; z-index: 10000; opacity: 0.4;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  padding: 28px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  background: rgba(250,247,244,0.85);
+  border-bottom: 1px solid rgba(139,94,74,0.1);
+  transition: padding 0.3s;
+}
+nav.scrolled { padding: 16px 60px; }
+.nav-logo {
+  font-family: ‘Playfair Display’, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--brown-dark);
+  letter-spacing: 0.02em;
+}
+.nav-links { display: flex; gap: 40px; }
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ‘’; position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 1px; background: var(--brown-warm);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover { color: var(--brown-dark); }
+.nav-links a:hover::after { width: 100%; }
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left {
+  background: var(--brown-dark);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 80px 70px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left::before {
+  content: ‘’;
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 30% 40%, rgba(139,94,74,0.35) 0%, transparent 65%);
+}
+.hero-img-wrap {
+  position: absolute; inset: 0;
+  overflow: hidden;
+}
+.hero-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  filter: sepia(30%);
+}
+.hero-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tan);
+  margin-bottom: 20px;
+  position: relative; z-index: 2;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s ease forwards;
+}
+.hero-name {
+  font-family: ‘Playfair Display’, serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 0.95;
+  position: relative; z-index: 2;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.5s ease forwards;
+}
+.hero-name em {
+  display: block;
+  font-style: italic;
+  color: var(--tan);
+  font-weight: 400;
+}
+.hero-scroll {
+  position: absolute; bottom: 40px; right: 30%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.2s ease forwards;
+}
+.hero-scroll span {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tan);
+}
+.scroll-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--tan), transparent);
+  animation: scrollPulse 2s infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  50% { opacity: 0.4; transform: scaleY(0.6); }
+}
+
+.hero-right {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 70px 80px 80px;
+  position: relative;
+}
+.hero-right::after {
+  content: ‘NH’;
+  font-family: ‘Playfair Display’, serif;
+  font-size: 28vw;
+  font-weight: 900;
+  color: rgba(139,94,74,0.04);
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  line-height: 1;
+}
+.hero-intro {
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brown-warm);
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s ease forwards;
+}
+.hero-bio {
+  font-family: ‘Playfair Display’, serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--brown-dark);
+  margin-bottom: 50px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.9s ease forwards;
+}
+.hero-bio strong { font-weight: 700; color: var(--brown-mid); }
+.hero-contacts {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.0s ease forwards;
+}
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-item:hover { color: var(--brown-warm); }
+.contact-icon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--tan);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.contact-item:hover .contact-icon {
+  background: var(--brown-warm);
+  color: white;
+  border-color: var(--brown-warm);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+section { padding: 120px 60px; }
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brown-warm);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 14px;
+}
+.section-label::before {
+  content: ‘’;
+  width: 30px; height: 1px;
+  background: var(--tan);
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: ‘Playfair Display’, serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--brown-dark);
+  line-height: 1.15;
+  margin-bottom: 60px;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-section {
+  background: var(--cream);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+.about-text p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #4a3020;
+  margin-bottom: 22px;
+}
+.about-photo-side {
+  position: relative;
+}
+.about-photo-frame {
+  position: relative;
+  display: inline-block;
+}
+.about-photo-frame::before {
+  content: ‘’;
+  position: absolute;
+  top: 20px; left: 20px; right: -20px; bottom: -20px;
+  border: 2px solid var(--tan);
+  z-index: 0;
+}
+.about-photo-frame img {
+  width: 100%;
+  max-width: 380px;
+  display: block;
+  filter: sepia(15%) contrast(1.05);
+  position: relative; z-index: 1;
+}
+.about-stat-row {
+  display: flex; gap: 40px; margin-top: 50px;
+}
+.stat-box {
+  text-align: center;
+}
+.stat-num {
+  font-family: ‘Playfair Display’, serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--brown-warm);
+  line-height: 1;
+  display: block;
+}
+.stat-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+.skills-section {
+  background: var(--brown-dark);
+  position: relative;
+  overflow: hidden;
+}
+.skills-section::before {
+  content: ‘’;
+  position: absolute; top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(139,94,74,0.25), transparent 60%);
+  pointer-events: none;
+}
+.skills-section .section-title { color: white; }
+.skills-section .section-label { color: var(--tan); }
+.skills-section .section-label::before { background: var(--brown-warm); }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+.skill-card {
+  border: 1px solid rgba(201,168,130,0.2);
+  padding: 24px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  transition: all 0.3s ease;
+  position: relative; overflow: hidden;
+  cursor: default;
+}
+.skill-card::before {
+  content: ‘’;
+  position: absolute; bottom: 0; left: 0; right: 0; height: 0;
+  background: rgba(139,94,74,0.2);
+  transition: height 0.3s ease;
+}
+.skill-card:hover::before { height: 100%; }
+.skill-card:hover { border-color: var(--tan); transform: translateY(-4px); }
+.skill-icon {
+  font-size: 1.6rem;
+  position: relative; z-index: 1;
+}
+.skill-name {
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tan);
+  position: relative; z-index: 1;
+  text-align: center;
+}
+
+.skills-tags-row {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 50px;
+}
+.skill-tag {
+  padding: 8px 20px;
+  border: 1px solid rgba(201,168,130,0.3);
+  color: var(--cream);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  transition: all 0.2s;
+}
+.skill-tag:hover {
+  background: var(--brown-warm);
+  border-color: var(--brown-warm);
+}
+.experience-section {
+  background: var(--off-white);
+}
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: ‘’;
+  position: absolute; left: 0; top: 8px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--tan), transparent);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 60px;
+}
+.timeline-item::before {
+  content: ‘’;
+  position: absolute; left: -44px; top: 8px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--brown-warm);
+  border: 2px solid var(--off-white);
+  box-shadow: 0 0 0 3px var(--tan);
+}
+.timeline-year {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brown-warm);
+  margin-bottom: 8px;
+}
+.timeline-title {
+  font-family: ‘Playfair Display’, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--brown-dark);
+  margin-bottom: 6px;
+}
+.timeline-org {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  letter-spacing: 0.05em;
+}
+.timeline-desc {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #5a4030;
+  max-width: 600px;
+}
+.letter-section {
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.letter-section::after {
+  content: ‘\201C’;
+  font-family: ‘Playfair Display’, serif;
+  font-size: 30vw;
+  font-weight: 900;
+  color: rgba(92,61,46,0.05);
+  position: absolute;
+  top: -5%;
+  left: -3%;
+  line-height: 1;
+  pointer-events: none;
+}
+.letter-content {
+  max-width: 760px;
+  position: relative; z-index: 1;
+}
+.letter-content p {
+  font-size: 1.08rem;
+  line-height: 1.9;
+  color: #4a3020;
+  margin-bottom: 26px;
+}
+.letter-content p:first-of-type::first-letter {
+  font-family: ‘Playfair Display’, serif;
+  font-size: 3.8rem;
+  font-weight: 900;
+  color: var(--brown-warm);
+  float: left;
+  line-height: 0.8;
+  margin-right: 10px;
+  margin-top: 8px;
+}
+.letter-signature {
+  margin-top: 50px;
+  display: flex; align-items: center; gap: 24px;
+}
+.sig-line {
+  font-family: ‘Playfair Display’, serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--brown-mid);
+}
+.sig-divider { width: 1px; height: 50px; background: var(--tan); }
+.sig-details { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+.contact-footer {
+  background: var(--brown-dark);
+  padding: 100px 60px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 60px;
+}
+.contact-footer .section-title { color: white; margin-bottom: 30px; }
+.contact-footer .section-label { color: var(--tan); }
+.contact-footer .section-label::before { background: var(--brown-warm); }
+.cta-link {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201,168,130,0.4);
+  padding-bottom: 4px;
+  transition: border-color 0.2s, color 0.2s;
+  margin-right: 40px;
+}
+.cta-link:hover { color: var(--tan); border-color: var(--tan); }
+.cta-arrow { transition: transform 0.2s; }
+.cta-link:hover .cta-arrow { transform: translateX(4px); }
+.contact-aside {
+  text-align: right;
+}
+.contact-aside p {
+  font-size: 0.8rem;
+  color: rgba(201,168,130,0.6);
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+}
+.progress-bar {
+  position: fixed; top: 0; left: 0;
+  height: 2px;
+  background: var(--brown-warm);
+  z-index: 9997;
+  width: 0%;
+  transition: width 0.1s;
+}
+/* hamburger – hidden on desktop */
+.nav-burger {
+  display: none;
+  flex-direction: column; justify-content: center; gap: 5px;
+  background: none; border: none; cursor: pointer;
+  padding: 4px; z-index: 200;
+}
+.nav-burger span {
+  display: block; width: 24px; height: 2px;
+  background: var(--brown-dark);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  nav.scrolled { padding: 14px 24px; }
+
+  .nav-burger { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: fixed; inset: 0; top: 0;
+    background: var(--off-white);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 36px; z-index: 150;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    font-size: 1.2rem;
+    letter-spacing: 0.15em;
+  }
+
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { min-height: 55vw; padding: 60px 28px 44px; }
+  .hero-name { font-size: clamp(2.8rem, 10vw, 3.5rem); }
+  .hero-right { padding: 48px 28px 60px; }
+  .hero-right::after { display: none; }
+  .hero-bio { font-size: clamp(1.3rem, 4.5vw, 1.6rem); }
+  .hero-contacts { gap: 16px; }
+
+  section { padding: 72px 24px; }
+  .about-section { grid-template-columns: 1fr; gap: 40px; }
+  .about-photo-frame img { max-width: 100%; }
+
+  .skills-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .timeline { padding-left: 28px; }
+
+  .contact-footer { grid-template-columns: 1fr; gap: 36px; padding: 72px 24px; }
+  .contact-aside { text-align: left; }
+
+  .exit-card { padding: 44px 32px; }
+}
+
+@media (max-width: 600px) {
+  .hero-left { min-height: 70vw; }
+  .hero-contacts { flex-direction: column; gap: 12px; }
+
+  .about-stat-row { justify-content: space-between; gap: 0; }
+
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .skills-tags-row { gap: 8px; }
+  .skill-tag { font-size: 0.75rem; padding: 6px 14px; }
+
+  .section-title { margin-bottom: 40px; }
+
+  .timeline-item::before { left: -32px; }
+
+  .letter-content p:first-of-type::first-letter {
+    font-size: 2.8rem;
+  }
+  .letter-signature { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .sig-divider { width: 40px; height: 1px; }
+
+  .cta-link { display: block; margin-right: 0; margin-bottom: 16px; }
+
+  .exit-card { padding: 40px 24px; }
+  .exit-headline { font-size: 1.6rem; }
+}
+
+/* EXIT INTENT POPUP */
+.exit-overlay {
+  position: fixed; inset: 0;
+  background: rgba(30, 18, 9, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.exit-overlay.active {
+  opacity: 1; pointer-events: all;
+}
+.exit-card {
+  background: var(--off-white);
+  max-width: 520px; width: 90%;
+  padding: 60px 56px;
+  position: relative;
+  transform: translateY(30px);
+  transition: transform 0.4s ease;
+  text-align: center;
+}
+.exit-overlay.active .exit-card {
+  transform: translateY(0);
+}
+.exit-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--brown-warm), var(--tan));
+}
+.exit-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brown-warm);
+  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.exit-eyebrow::before, .exit-eyebrow::after {
+  content: ''; width: 24px; height: 1px; background: var(--tan);
+}
+.exit-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: var(--brown-dark);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.exit-headline em {
+  font-style: italic;
+  color: var(--brown-warm);
+  font-weight: 400;
+}
+.exit-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+.exit-cta {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--brown-dark);
+  color: white;
+  text-decoration: none;
+  padding: 14px 32px;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  margin-bottom: 16px;
+}
+.exit-cta:hover { background: var(--brown-warm); }
+.exit-dismiss {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  background: none; border: none;
+  transition: color 0.2s;
+  margin: 0 auto;
+}
+.exit-dismiss:hover { color: var(--brown-dark); }
+.exit-close {
+  position: absolute; top: 18px; right: 22px;
+  background: none; border: none;
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.exit-close:hover { color: var(--brown-dark); }
+</style>
+
+</head>
+<body>
+  <div class="exit-overlay" id="exitOverlay">
+    <div class="exit-card">
+      <button class="exit-close" id="exitClose" aria-label="Luk">×</button>
+      <p class="exit-eyebrow">Vent et øjeblik</p>
+      <h2 class="exit-headline">Inden du går -<br><em>lad os tage en snak.</em></h2>
+      <p class="exit-body">Jeg er klar til nye udfordringer og tager gerne en uforpligtende samtale. Send mig en mail eller ring - jeg svarer hurtigt.</p>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Nicklashebsgaard@gmail.com&su=Hej%20Nicklas%20%E2%80%93%20jeg%20vil%20gerne%20tage%20en%20snak" target="_blank" rel="noopener" class="exit-cta">
+        Skriv til mig →
+      </a>
+      <button class="exit-dismiss" id="exitDismiss">Nej tak, jeg kigger videre</button>
+    </div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <nav id="nav">
+    <div class="nav-logo">Nicklas Hebsgaard</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#om">Om</a>
+      <a href="#kompetencer">Kompetencer</a>
+      <a href="#erfaring">Erfaring</a>
+      <a href="#ansoegning">Ansøgning</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <section class="hero" id="top">
+    <div class="hero-left">
+      <div class="hero-img-wrap">
+        <img src="/nicklas.jpeg" alt="Nicklas Hebsgaard">
+      </div>
+      <p class="hero-tag">Frontend Udvikler · Webudvikler</p>
+      <h1 class="hero-name">
+        Nicklas<br>
+        <em>Hebsgaard</em>
+      </h1>
+      <div class="hero-scroll">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <p class="hero-intro">Tilgængelig for nye projekter</p>
+      <p class="hero-bio">
+        Jeg skaber <strong>præcise, levende</strong> og brugerfokuserede web-oplevelser - med øje for detaljen og <strong>passion for frontend.</strong>
+      </p>
+      <div class="hero-contacts">
+        <a href="mailto:Nicklashebsgaard@gmail.com" class="contact-item">
+          <div class="contact-icon">✉</div>
+          <span>Nicklashebsgaard@gmail.com</span>
+        </a>
+        <a href="tel:+4527824113" class="contact-item">
+          <div class="contact-icon">☎</div>
+          <span>+45 27 82 41 13</span>
+        </a>
+        <div class="contact-item">
+          <div class="contact-icon">⌂</div>
+          <span>Auning</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section" id="om">
+    <div>
+      <p class="section-label reveal">Om mig</p>
+      <h2 class="section-title reveal">En webudvikler<br>med blik for detaljen</h2>
+      <div class="about-text">
+        <p class="reveal">Jeg er 33 år og bor i Auning med min kæreste og tre børn. De seneste tre+ år har jeg arbejdet som Junior Software Engineer hos Heyloyalty, hvor jeg har haft fingrene dybt nede i komplekse, skalerbare SaaS-løsninger.</p>
+        <p class="reveal">Jeg er en perfektionist, når det gælder layout og brugeroplevelse. Når noget ikke sidder præcist rigtigt, kribler det i fingrene på mig, indtil det er løst. Det er ikke bare et quirk - det er min motor.</p>
+        <p class="reveal">Som person er jeg glad, udadvendt og bringer en naturlig positiv energi til teamet. Jeg er seriøs og ansvarsbevidst, når det kommer til mit arbejde, og vant til at tage ejerskab over mine opgaver.</p>
+      </div>
+      <div class="about-stat-row reveal">
+        <div class="stat-box">
+          <span class="stat-num" data-count="3">0</span>
+          <div class="stat-label">År hos Heyloyalty</div>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="2">0</span>
+          <div class="stat-label">Uddannelser</div>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="15">0</span>
+          <div class="stat-label">Fag & kompetencer</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-photo-side reveal">
+      <div class="about-photo-frame">
+        <img src="/nicklas.jpeg" alt="Nicklas Hebsgaard" style="width:100%;max-width:380px;display:block;filter:sepia(15%) contrast(1.05);">
+      </div>
+    </div>
+  </section>
+
+  <section class="skills-section" id="kompetencer">
+    <p class="section-label reveal">Kompetencer</p>
+    <h2 class="section-title reveal">Hvad jeg bringer<br>til bordet</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">🐘</div>
+        <div class="skill-name">Laravel</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚛️</div>
+        <div class="skill-name">React</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">📜</div>
+        <div class="skill-name">JavaScript</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🖥️</div>
+        <div class="skill-name">Frontend</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🎯</div>
+        <div class="skill-name">UX / UI</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">CSS / SASS</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🧱</div>
+        <div class="skill-name">HTML</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🔍</div>
+        <div class="skill-name">SEO</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">WordPress</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🔌</div>
+        <div class="skill-name">Dataservices</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">Server-side</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🔥</div>
+        <div class="skill-name">Livewire</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🏔️</div>
+        <div class="skill-name">Alpine.js</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">💧</div>
+        <div class="skill-name">Liquid</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">✉️</div>
+        <div class="skill-name">E-mail templates</div>
+      </div>
+    </div>
+
+    <div class="skills-tags-row">
+      <span class="skill-tag reveal">Digital handel</span>
+      <span class="skill-tag reveal">Avanceret frontend</span>
+      <span class="skill-tag reveal">Avanceret CSS</span>
+      <span class="skill-tag reveal">Programmering (JavaScript)</span>
+      <span class="skill-tag reveal">Dataservices og integration</span>
+      <span class="skill-tag reveal">CMS - WordPress</span>
+      <span class="skill-tag reveal">Serverside programmering</span>
+      <span class="skill-tag reveal">Projektorganisering</span>
+      <span class="skill-tag reveal">Faglig fornyelse</span>
+      <span class="skill-tag reveal">Styring af fysiske enheder</span>
+      <span class="skill-tag reveal">Selvstændig</span>
+      <span class="skill-tag reveal">Samarbejde</span>
+      <span class="skill-tag reveal">Laravel & Blade</span>
+      <span class="skill-tag reveal">Livewire & Alpine.js</span>
+      <span class="skill-tag reveal">Liquid templating</span>
+      <span class="skill-tag reveal">E-mail templates</span>
+      <span class="skill-tag reveal">SaaS udvikling</span>
+      <span class="skill-tag reveal">API-integration</span>
+      <span class="skill-tag reveal">Modulær arkitektur</span>
+    </div>
+  </section>
+
+  <section class="experience-section" id="erfaring">
+    <p class="section-label reveal">Uddannelse & Erfaring</p>
+    <h2 class="section-title reveal">Min rejse<br>til frontend</h2>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-year">Feb 2023 - Nu</div>
+        <div class="timeline-title">Junior Software Engineer</div>
+        <div class="timeline-org">Heyloyalty</div>
+        <p class="timeline-desc">Tre+ år med ansvar for komplekse, skalerbare SaaS-løsninger inden for marketing-automation og loyalitetssystemer. Har designet og implementeret modulær arkitektur, datadrevne dashboards og genanvendelige UI-komponenter i Laravel, Blade, Livewire og Alpine.js. Specialiseret i avancerede responsive e-mail templates med Liquid på tværs af alle klienter – inkl. Outlook.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">Aug 2021 - Nov 2022</div>
+        <div class="timeline-title">Webudvikler</div>
+        <div class="timeline-org">Viden Djurs</div>
+        <p class="timeline-desc">Afsluttede min uddannelse som webudvikler med fokus på React, JavaScript og moderne frontend-teknikker. Fordybede mig særligt i komponenter, state management og responsivt design med målet om at matche en stilling som frontend-udvikler.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">Jan 2021 - Jun 2021</div>
+        <div class="timeline-title">Grundforløb Webudvikling</div>
+        <div class="timeline-org">Aarhus Tech</div>
+        <p class="timeline-desc">Grundlaget for min karriereskift til webudvikling. Her fik jeg de første solide fundament i HTML, CSS og programmering, der dannede basis for mit videre studie.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2017 - 2020</div>
+        <div class="timeline-title">Servicetekniker</div>
+        <div class="timeline-org">Hotel</div>
+        <p class="timeline-desc">Tre år som servicetekniker på hotel gav mig stærke kompetencer inden for ansvarlighed, servicemindset og løsningsorientering. Da Corona ændrede fremtiden, valgte jeg at satse fuldt ud på webudvikling - og det fortryder jeg ikke.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="letter-section" id="ansoegning">
+    <p class="section-label reveal">Ansøgning</p>
+    <h2 class="section-title reveal">Med egne ord</h2>
+    <div class="letter-content">
+      <p class="reveal">Jeg fandt jeres stillingsopslag, og det fangede straks min interesse. Det kribler i fingrene på mig, når jeg ser elementer på hjemmesider, der ikke sidder snorlige - eller hvor jeg ved, det kan optimeres. Jeg er en smule perfektionist på det punkt, men det bærer jeg stolt, for det handler om at levere det bedste resultat for både kunden og brugeren.</p>
+      <p class="reveal">Jeg hedder Nicklas Hebsgaard og er 33 år gammel. Til daglig bor jeg i Auning med min kæreste og tre børn. De seneste tre+ år har jeg arbejdet som Junior Software Engineer hos Heyloyalty, hvor jeg har haft fingrene dybt nede i komplekse, skalerbare SaaS-løsninger. Min hverdag har bestået af at designe og implementere modulær arkitektur og datadrevne dashboards - løsninger der ikke bare ser godt ud, men som håndterer store mængder data og komplekse flows.</p>
+      <p class="reveal">Som en del af arbejdet med et komplekst marketing-økosystem har jeg specialiseret mig i responsive e-mail templates med avanceret datastyring via Liquid, og opbygget en dyb forståelse for de tekniske nuancer, der kræves for at sikre, at komplekse layouts fungerer fejlfrit på tværs af alle klienter - herunder de altid udfordrende Outlook-versioner. Min værktøjskasse består af Laravel, Blade, Livewire og Alpine.js.</p>
+      <p class="reveal">Under min uddannelse fordybede jeg mig intensivt i React, og de seneste tre år har jeg mestret Laravel. Min erfaring har lært mig, at frameworks blot er værktøjer - det vigtige er forståelsen for state-management, modulær arkitektur, API-integrationer og responsive interfaces. Jeg er meget motiveret for at bringe mine kompetencer i spil hos jer, uanset om jeres stack er baseret på React, Vue eller en helt tredje teknologi. Jeg elsker at lære og sætter en ære i at mestre det værktøj, der skaber den største værdi for teamet.</p>
+      <div class="letter-signature reveal">
+        <div class="sig-line">Nicklas Hebsgaard</div>
+        <div class="sig-divider"></div>
+        <div class="sig-details">
+          Nicklashebsgaard@gmail.com<br>
+          +45 27 82 41 13
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="contact-footer" id="kontakt">
+    <div>
+      <p class="section-label reveal">Kontakt</p>
+      <h2 class="section-title reveal">Lad os tage<br>en snak</h2>
+      <div class="reveal">
+        <a href="mailto:Nicklashebsgaard@gmail.com" class="cta-link">
+          Nicklashebsgaard@gmail.com <span class="cta-arrow">→</span>
+        </a>
+        <a href="tel:+4527824113" class="cta-link">
+          +45 27 82 41 13 <span class="cta-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-aside reveal">
+      <p>
+        Auning<br><br>
+        Tilgængelig for<br>
+        nye projekter
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.14;
+      ry += (my - ry) * 0.14;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animCursor);
+    }
+    animCursor();
+
+    document.querySelectorAll('a, button, .skill-card, .skill-tag').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+        ring.style.width = '60px'; ring.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        ring.style.width = '36px'; ring.style.height = '36px';
+      });
+    });
+
+    const bar = document.getElementById('progressBar');
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      bar.style.width = pct + '%';
+    });
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+          let delay = 0;
+          siblings.forEach((s, idx) => { if (s === entry.target) delay = idx * 80; });
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => observer.observe(r));
+
+    function countUp(el, target) {
+      let start = 0;
+      const duration = 1400;
+      const step = (timestamp) => {
+        if (!countUp.startTime) countUp.startTime = timestamp;
+        const progress = Math.min((timestamp - countUp.startTime) / duration, 1);
+        el.textContent = Math.floor(progress * target);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target + '+';
+      };
+      countUp.startTime = null;
+      requestAnimationFrame(step);
+    }
+    const statObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          document.querySelectorAll('[data-count]').forEach(el => {
+            countUp(el, parseInt(el.dataset.count));
+          });
+          statObs.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    const statRow = document.querySelector('.about-stat-row');
+    if (statRow) statObs.observe(statRow);
+
+    window.addEventListener('scroll', () => {
+      const heroLeft = document.querySelector('.hero-left');
+      if (heroLeft) {
+        heroLeft.style.backgroundPositionY = (window.scrollY * 0.3) + 'px';
+      }
+    });
+
+    const burger = document.getElementById('navBurger');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    const exitOverlay = document.getElementById('exitOverlay');
+    const exitClose = document.getElementById('exitClose');
+    const exitDismiss = document.getElementById('exitDismiss');
+    let exitShown = false;
+
+    function showExit() {
+      if (exitShown) return;
+      exitShown = true;
+      exitOverlay.classList.add('active');
+    }
+    function hideExit() {
+      exitOverlay.classList.remove('active');
+    }
+
+    document.addEventListener('mouseleave', e => {
+      if (e.clientY < 10) showExit();
+    });
+
+    exitClose.addEventListener('click', hideExit);
+    exitDismiss.addEventListener('click', hideExit);
+    exitOverlay.addEventListener('click', e => {
+      if (e.target === exitOverlay) hideExit();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') hideExit();
+    });
+  </script>
+</body>
+</html>
