@@ -448,55 +448,172 @@ section { padding: 120px 60px; }
   color: #5a4030;
   max-width: 600px;
 }
-.letter-section {
-  background: var(--cream);
-  position: relative;
+.work-section { background: var(--cream); padding: 120px 60px; }
+.work-showcase { max-width: 900px; }
+.work-featured-browser {
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 24px 60px rgba(58,35,24,0.16), 0 6px 16px rgba(58,35,24,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
 }
-.letter-section::after {
-  content: ‘\201C’;
+.work-featured-browser:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 36px 80px rgba(58,35,24,0.22), 0 8px 20px rgba(58,35,24,0.1);
+}
+.work-browser-bar {
+  background: var(--brown-dark);
+  padding: 10px 16px;
+  display: flex; align-items: center; gap: 14px;
+}
+.work-browser-dots { display: flex; gap: 6px; flex-shrink: 0; }
+.work-browser-dots span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+.work-browser-dots span:nth-child(1) { background: #ff5f57; }
+.work-browser-dots span:nth-child(2) { background: #febc2e; }
+.work-browser-dots span:nth-child(3) { background: #28c840; }
+.work-browser-url {
+  flex: 1;
+  background: rgba(255,255,255,0.07);
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 0.72rem;
+  color: rgba(201,168,130,0.5);
+  letter-spacing: 0.04em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color 0.25s;
+}
+.work-featured-img-wrap {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: #e8dfd6;
+  position: relative;
+}
+.work-featured-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top left;
+  display: block;
+  transition: opacity 0.22s ease, transform 0.4s ease;
+}
+.work-featured-img-wrap.switching img { opacity: 0; transform: scale(1.02); }
+.work-featured-overlay {
+  position: absolute; inset: 0;
+  background: rgba(58,35,24,0.52);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.25s;
+}
+.work-featured-browser:hover .work-featured-overlay { opacity: 1; }
+.work-featured-overlay span {
+  color: white;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  border: 1px solid rgba(255,255,255,0.45);
+}
+.work-featured-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 0 22px;
+}
+.work-featured-title {
   font-family: ‘Playfair Display’, serif;
-  font-size: 30vw;
-  font-weight: 900;
-  color: rgba(92,61,46,0.05);
-  position: absolute;
-  top: -5%;
-  left: -3%;
-  line-height: 1;
-  pointer-events: none;
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--brown-dark);
 }
-.letter-content {
-  max-width: 760px;
-  position: relative; z-index: 1;
+.work-featured-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.work-tag {
+  padding: 4px 11px;
+  border: 1px solid rgba(139,94,74,0.3);
+  font-size: 0.7rem; letter-spacing: 0.09em;
+  color: var(--brown-warm); text-transform: uppercase;
 }
-.letter-content p {
-  font-size: 1.08rem;
-  line-height: 1.9;
-  color: #4a3020;
-  margin-bottom: 26px;
+.work-thumbs { display: flex; gap: 10px; }
+.work-thumb {
+  flex: 1; border-radius: 6px; overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.5;
+  transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
 }
-.letter-content p:first-of-type::first-letter {
+.work-thumb img {
+  width: 100%; aspect-ratio: 16/10;
+  object-fit: cover; object-position: top left;
+  display: block;
+}
+.work-thumb:hover { opacity: 0.75; transform: translateY(-2px); }
+.work-thumb.active { border-color: var(--brown-warm); opacity: 1; }
+.work-lightbox {
+  position: fixed; inset: 0;
+  background: rgba(18, 10, 4, 0.93);
+  backdrop-filter: blur(10px);
+  z-index: 99998;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.work-lightbox.active { opacity: 1; pointer-events: all; }
+.work-lightbox-inner {
+  max-width: min(1500px, 92vw);
+  width: 100%;
+  padding: 0 32px;
+  position: relative;
+}
+.work-lightbox-browser {
+  border-radius: 10px; overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+}
+.work-lightbox-img {
+  width: 100%;
+  max-height: 78vh;
+  height: 620px;
+  object-fit: contain;
+  display: block;
+  background: white;
+}
+.work-lightbox-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0 0;
+}
+.work-lightbox-title {
   font-family: ‘Playfair Display’, serif;
-  font-size: 3.8rem;
-  font-weight: 900;
-  color: var(--brown-warm);
-  float: left;
-  line-height: 0.8;
-  margin-right: 10px;
-  margin-top: 8px;
+  font-size: 1.1rem;
+  color: white;
+  padding-right: 1rem;
 }
-.letter-signature {
-  margin-top: 50px;
-  display: flex; align-items: center; gap: 24px;
+.work-lightbox-close {
+  position: fixed; top: 22px; right: 26px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: white; font-size: 1.4rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; line-height: 1;
 }
-.sig-line {
-  font-family: ‘Playfair Display’, serif;
-  font-size: 1.8rem;
-  font-style: italic;
-  color: var(--brown-mid);
+.work-lightbox-close:hover { background: rgba(255,255,255,0.22); }
+.work-lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 50px; height: 50px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: white; font-size: 1.5rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
 }
-.sig-divider { width: 1px; height: 50px; background: var(--tan); }
-.sig-details { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+.work-lightbox-nav:hover { background: rgba(255,255,255,0.22); }
+.work-lightbox-prev { left: 26px; }
+.work-lightbox-next { right: 26px; }
+.work-lightbox-counter {
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4); margin-left: auto;
+}
+@media (max-width: 900px) {
+  .work-section { padding: 72px 24px; }
+  .work-lightbox-inner { padding: 0 56px; }
+}
+@media (max-width: 600px) {
+  .work-thumbs { gap: 6px; }
+  .work-lightbox-inner { padding: 0 48px; }
+  .work-lightbox-nav { width: 40px; height: 40px; font-size: 1.2rem; }
+}
 .contact-footer {
   background: var(--brown-dark);
   padding: 100px 60px;
@@ -538,7 +655,6 @@ section { padding: 120px 60px; }
   width: 0%;
   transition: width 0.1s;
 }
-/* hamburger – hidden on desktop */
 .nav-burger {
   display: none;
   flex-direction: column; justify-content: center; gap: 5px;
@@ -642,7 +758,6 @@ section { padding: 120px 60px; }
   .exit-headline { font-size: 1.6rem; }
 }
 
-/* EXIT INTENT POPUP */
 .exit-overlay {
   position: fixed; inset: 0;
   background: rgba(30, 18, 9, 0.7);
@@ -769,7 +884,7 @@ section { padding: 120px 60px; }
       <a href="#om">Om</a>
       <a href="#kompetencer">Kompetencer</a>
       <a href="#erfaring">Erfaring</a>
-      <a href="#ansoegning">Ansøgning</a>
+      <a href="#arbejde">Arbejde</a>
       <a href="#kontakt">Kontakt</a>
     </div>
     <button class="nav-burger" id="navBurger" aria-label="Menu">
@@ -966,20 +1081,70 @@ section { padding: 120px 60px; }
     </div>
   </section>
 
-  <section class="letter-section" id="ansoegning">
-    <p class="section-label reveal">Ansøgning</p>
-    <h2 class="section-title reveal">Med egne ord</h2>
-    <div class="letter-content">
-      <p class="reveal">Jeg fandt jeres stillingsopslag, og det fangede straks min interesse. Det kribler i fingrene på mig, når jeg ser elementer på hjemmesider, der ikke sidder snorlige - eller hvor jeg ved, det kan optimeres. Jeg er en smule perfektionist på det punkt, men det bærer jeg stolt, for det handler om at levere det bedste resultat for både kunden og brugeren.</p>
-      <p class="reveal">Jeg hedder Nicklas Hebsgaard og er 33 år gammel. Til daglig bor jeg i Auning med min kæreste og tre børn. De seneste tre+ år har jeg arbejdet som Junior Software Engineer hos Heyloyalty, hvor jeg har haft fingrene dybt nede i komplekse, skalerbare SaaS-løsninger. Min hverdag har bestået af at designe og implementere modulær arkitektur og datadrevne dashboards - løsninger der ikke bare ser godt ud, men som håndterer store mængder data og komplekse flows.</p>
-      <p class="reveal">Som en del af arbejdet med et komplekst marketing-økosystem har jeg specialiseret mig i responsive e-mail templates med avanceret datastyring via Liquid, og opbygget en dyb forståelse for de tekniske nuancer, der kræves for at sikre, at komplekse layouts fungerer fejlfrit på tværs af alle klienter - herunder de altid udfordrende Outlook-versioner. Min værktøjskasse består af Laravel, Blade, Livewire og Alpine.js.</p>
-      <p class="reveal">Under min uddannelse fordybede jeg mig intensivt i React, og de seneste tre år har jeg mestret Laravel. Min erfaring har lært mig, at frameworks blot er værktøjer - det vigtige er forståelsen for state-management, modulær arkitektur, API-integrationer og responsive interfaces. Jeg er meget motiveret for at bringe mine kompetencer i spil hos jer, uanset om jeres stack er baseret på React, Vue eller en helt tredje teknologi. Jeg elsker at lære og sætter en ære i at mestre det værktøj, der skaber den største værdi for teamet.</p>
-      <div class="letter-signature reveal">
-        <div class="sig-line">Nicklas Hebsgaard</div>
-        <div class="sig-divider"></div>
-        <div class="sig-details">
-          Nicklashebsgaard@gmail.com<br>
-          +45 27 82 41 13
+  <div class="work-lightbox" id="workLightbox">
+    <button class="work-lightbox-close" id="lbClose" aria-label="Luk">×</button>
+    <button class="work-lightbox-nav work-lightbox-prev" id="lbPrev" aria-label="Forrige">‹</button>
+    <button class="work-lightbox-nav work-lightbox-next" id="lbNext" aria-label="Næste">›</button>
+    <div class="work-lightbox-inner">
+      <div class="work-lightbox-browser">
+        <div class="work-browser-bar">
+          <div class="work-browser-dots"><span></span><span></span><span></span></div>
+          <div class="work-browser-url" id="lbUrl"></div>
+        </div>
+        <img class="work-lightbox-img" id="lbImg" src="" alt="">
+      </div>
+      <div class="work-lightbox-meta">
+        <div class="work-lightbox-title" id="lbTitle"></div>
+        <div class="work-featured-tags" id="lbTags"></div>
+        <div class="work-lightbox-counter" id="lbCounter"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="work-section" id="arbejde">
+    <p class="section-label reveal">Arbejde</p>
+    <h2 class="section-title reveal">Udvalgte projekter</h2>
+
+    <div class="work-showcase reveal">
+      <div class="work-featured-browser" id="workFeaturedBrowser">
+        <div class="work-browser-bar">
+          <div class="work-browser-dots"><span></span><span></span><span></span></div>
+          <div class="work-browser-url" id="featuredUrl">app.heyloyalty.com · CLC Integration</div>
+        </div>
+        <div class="work-featured-img-wrap" id="featuredWrap">
+          <img id="featuredImg" src="/work/heyloyalty-clc-integration.png" alt="CLC Integration">
+          <div class="work-featured-overlay"><span>Åben fuld skærm</span></div>
+        </div>
+      </div>
+
+      <div class="work-featured-meta">
+        <div class="work-featured-title" id="featuredTitle">CLC Integration</div>
+        <div class="work-featured-tags" id="featuredTags">
+          <span class="work-tag">Laravel</span>
+          <span class="work-tag">Blade</span>
+          <span class="work-tag">Livewire</span>
+          <span class="work-tag">Tailwind</span>
+        </div>
+      </div>
+
+      <div class="work-thumbs">
+        <div class="work-thumb" data-index="0">
+          <img src="/work/heyloyalty-clc-integration.png" alt="CLC Integration">
+        </div>
+        <div class="work-thumb" data-index="1">
+          <img src="/work/heyloyalty-clc-insights.png" alt="CLC Insights">
+        </div>
+        <div class="work-thumb" data-index="2">
+          <img src="/work/heyloyalty-produkteksponering.png" alt="Produkteksponering">
+        </div>
+        <div class="work-thumb" data-index="3">
+          <img src="/work/heyloyalty-kampagneeksponering.png" alt="kampagneeksponering">
+        </div>
+        <div class="work-thumb active" data-index="4">
+          <img src="/work/heyloyalty-skabeloner.png" alt="Skabelon oversigt">
+        </div>
+        <div class="work-thumb" data-index="5">
+          <img src="/work/heyloyalty-kampagner.png" alt="Kampagneoversigt">
         </div>
       </div>
     </div>
@@ -1109,6 +1274,74 @@ section { padding: 120px 60px; }
         navLinks.classList.remove('open');
         nav.classList.remove('menu-open');
       });
+    });
+
+    const workData = [
+      { src: '/work/heyloyalty-clc-integration.png',    title: 'Customer Loyalty Center — Integration',url: 'app.heyloyalty.com · CLC Integration',        tags: ['Laravel','Blade','Livewire', 'Tailwind'] },
+      { src: '/work/heyloyalty-clc-insights.png',       title: 'Customer Loyalty Center — Insights',   url: 'app.heyloyalty.com · CLC Insights',           tags: ['Laravel','Alpine.js','Blade', 'Tailwind'] },
+      { src: '/work/heyloyalty-produkteksponering.png', title: 'Produkteksponering',                   url: 'app.heyloyalty.com · Produkteksponering',     tags: ['Laravel','Livewire','Alpine.js', 'Tailwind'] },
+      { src: '/work/heyloyalty-kampagneeksponering.png',title: 'Kampangeekssponering',                 url: 'app.heyloyalty.com · Kampangeekssponering',   tags: ['Laravel','Livewire','Alpine.js', 'Tailwind'] },
+      { src: '/work/heyloyalty-kampagner.png',          title: 'Kampagneoversigt',                     url: 'app.heyloyalty.com · Kampagneoversigt',       tags: ['Laravel','Livewire','Alpine.js','Tailwind'] },
+      { src: '/work/heyloyalty-skabeloner.png',         title: 'Skabelon oversigt',                    url: 'app.heyloyalty.com · Skabelon oversigt',      tags: ['Laravel','Blade','Livewire', 'Tailwind'] },
+    ];
+    const featuredImg   = document.getElementById('featuredImg');
+    const featuredUrl   = document.getElementById('featuredUrl');
+    const featuredTitle = document.getElementById('featuredTitle');
+    const featuredTags  = document.getElementById('featuredTags');
+    const featuredWrap  = document.getElementById('featuredWrap');
+    const workThumbs    = document.querySelectorAll('.work-thumb');
+    let activeWork = 0;
+
+    function setWork(index) {
+      activeWork = index;
+      const d = workData[index];
+      featuredWrap.classList.add('switching');
+      setTimeout(() => {
+        featuredImg.src = d.src;
+        featuredImg.alt = d.title;
+        featuredUrl.textContent = d.url;
+        featuredTitle.textContent = d.title;
+        featuredTags.innerHTML = d.tags.map(t => `<span class="work-tag">${t}</span>`).join('');
+        featuredWrap.classList.remove('switching');
+      }, 200);
+      workThumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+    }
+
+    workThumbs.forEach((thumb, i) => thumb.addEventListener('click', () => setWork(i)));
+
+    const workLightbox = document.getElementById('workLightbox');
+    const lbImg    = document.getElementById('lbImg');
+    const lbUrl    = document.getElementById('lbUrl');
+    const lbTitle  = document.getElementById('lbTitle');
+    const lbTags   = document.getElementById('lbTags');
+    const lbCounter= document.getElementById('lbCounter');
+    let lbActive = 0;
+
+    function openLightbox(index) {
+      lbActive = index;
+      const d = workData[index];
+      lbImg.src = d.src; lbImg.alt = d.title;
+      lbUrl.textContent = d.url;
+      lbTitle.textContent = d.title;
+      lbTags.innerHTML = d.tags.map(t => `<span class="work-tag" style="border-color:rgba(201,168,130,0.35);color:var(--tan)">${t}</span>`).join('');
+      lbCounter.textContent = `${index + 1} / ${workData.length}`;
+      workLightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+      workLightbox.classList.remove('active');
+    }
+
+    document.getElementById('workFeaturedBrowser').addEventListener('click', () => openLightbox(activeWork));
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', () => openLightbox((lbActive - 1 + workData.length) % workData.length));
+    document.getElementById('lbNext').addEventListener('click', () => openLightbox((lbActive + 1) % workData.length));
+    workLightbox.addEventListener('click', e => { if (e.target === workLightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!workLightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') openLightbox((lbActive + 1) % workData.length);
+      if (e.key === 'ArrowLeft')  openLightbox((lbActive - 1 + workData.length) % workData.length);
     });
 
     const exitOverlay = document.getElementById('exitOverlay');
