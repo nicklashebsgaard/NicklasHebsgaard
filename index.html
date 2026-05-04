@@ -1109,44 +1109,20 @@ section { padding: 120px 60px; }
       <div class="work-featured-browser" id="workFeaturedBrowser">
         <div class="work-browser-bar">
           <div class="work-browser-dots"><span></span><span></span><span></span></div>
-          <div class="work-browser-url" id="featuredUrl">app.heyloyalty.com · CLC Integration</div>
+          <div class="work-browser-url" id="featuredUrl"></div>
         </div>
         <div class="work-featured-img-wrap" id="featuredWrap">
-          <img id="featuredImg" src="/work/heyloyalty-clc-integration.png" alt="CLC Integration">
+          <img id="featuredImg" src="" alt="">
           <div class="work-featured-overlay"><span>Åben fuld skærm</span></div>
         </div>
       </div>
 
       <div class="work-featured-meta">
-        <div class="work-featured-title" id="featuredTitle">CLC Integration</div>
-        <div class="work-featured-tags" id="featuredTags">
-          <span class="work-tag">Laravel</span>
-          <span class="work-tag">Blade</span>
-          <span class="work-tag">Livewire</span>
-          <span class="work-tag">Tailwind</span>
-        </div>
+        <div class="work-featured-title" id="featuredTitle"></div>
+        <div class="work-featured-tags" id="featuredTags"></div>
       </div>
 
-      <div class="work-thumbs">
-        <div class="work-thumb" data-index="0">
-          <img src="/work/heyloyalty-clc-integration.png" alt="CLC Integration">
-        </div>
-        <div class="work-thumb" data-index="1">
-          <img src="/work/heyloyalty-clc-insights.png" alt="CLC Insights">
-        </div>
-        <div class="work-thumb" data-index="2">
-          <img src="/work/heyloyalty-produkteksponering.png" alt="Produkteksponering">
-        </div>
-        <div class="work-thumb" data-index="3">
-          <img src="/work/heyloyalty-kampagneeksponering.png" alt="kampagneeksponering">
-        </div>
-        <div class="work-thumb active" data-index="4">
-          <img src="/work/heyloyalty-skabeloner.png" alt="Skabelon oversigt">
-        </div>
-        <div class="work-thumb" data-index="5">
-          <img src="/work/heyloyalty-kampagner.png" alt="Kampagneoversigt">
-        </div>
-      </div>
+      <div class="work-thumbs" id="workThumbs"></div>
     </div>
   </section>
 
@@ -1277,20 +1253,32 @@ section { padding: 120px 60px; }
     });
 
     const workData = [
-      { src: '/work/heyloyalty-clc-integration.png',    title: 'Customer Loyalty Center — Integration',url: 'app.heyloyalty.com · CLC Integration',        tags: ['Laravel','Blade','Livewire', 'Tailwind'] },
-      { src: '/work/heyloyalty-clc-insights.png',       title: 'Customer Loyalty Center — Insights',   url: 'app.heyloyalty.com · CLC Insights',           tags: ['Laravel','Alpine.js','Blade', 'Tailwind'] },
-      { src: '/work/heyloyalty-produkteksponering.png', title: 'Produkteksponering',                   url: 'app.heyloyalty.com · Produkteksponering',     tags: ['Laravel','Livewire','Alpine.js', 'Tailwind'] },
-      { src: '/work/heyloyalty-kampagneeksponering.png',title: 'Kampangeekssponering',                 url: 'app.heyloyalty.com · Kampangeekssponering',   tags: ['Laravel','Livewire','Alpine.js', 'Tailwind'] },
-      { src: '/work/heyloyalty-kampagner.png',          title: 'Kampagneoversigt',                     url: 'app.heyloyalty.com · Kampagneoversigt',       tags: ['Laravel','Livewire','Alpine.js','Tailwind'] },
-      { src: '/work/heyloyalty-skabeloner.png',         title: 'Skabelon oversigt',                    url: 'app.heyloyalty.com · Skabelon oversigt',      tags: ['Laravel','Blade','Livewire', 'Tailwind'] },
+      { src: '/work/heyloyalty-clc-integration.png',    title: 'Customer Loyalty Center — Integration', url: 'app.heyloyalty.com · CLC Integration',       tags: ['Laravel','Blade','Livewire','Tailwind'] },
+      { src: '/work/heyloyalty-clc-insights.png',       title: 'Customer Loyalty Center — Insights',    url: 'app.heyloyalty.com · CLC Insights',          tags: ['Laravel','Alpine.js','Blade','Tailwind'] },
+      { src: '/work/heyloyalty-produkteksponering.png', title: 'Produkteksponering',                    url: 'app.heyloyalty.com · Produkteksponering',    tags: ['Laravel','Livewire','Alpine.js','Tailwind'] },
+      { src: '/work/heyloyalty-kampagneeksponering.png',title: 'Kampagneeksponering',                   url: 'app.heyloyalty.com · Kampagneeksponering',   tags: ['Laravel','Livewire','Alpine.js','Tailwind'] },
+      { src: '/work/heyloyalty-kampagner.png',          title: 'Kampagneoversigt',                      url: 'app.heyloyalty.com · Kampagneoversigt',      tags: ['Laravel','Livewire','Alpine.js','Tailwind'] },
+      { src: '/work/heyloyalty-skabeloner.png',         title: 'Skabelon oversigt',                     url: 'app.heyloyalty.com · Skabelon oversigt',     tags: ['Laravel','Blade','Livewire','Tailwind'] },
     ];
+
     const featuredImg   = document.getElementById('featuredImg');
     const featuredUrl   = document.getElementById('featuredUrl');
     const featuredTitle = document.getElementById('featuredTitle');
     const featuredTags  = document.getElementById('featuredTags');
     const featuredWrap  = document.getElementById('featuredWrap');
-    const workThumbs    = document.querySelectorAll('.work-thumb');
+    const workThumbsEl  = document.getElementById('workThumbs');
     let activeWork = 0;
+
+    workData.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'work-thumb';
+      div.dataset.index = i;
+      div.innerHTML = `<img src="${item.src}" alt="${item.title}">`;
+      div.addEventListener('click', () => setWork(i));
+      workThumbsEl.appendChild(div);
+    });
+
+    const workThumbs = workThumbsEl.querySelectorAll('.work-thumb');
 
     function setWork(index) {
       activeWork = index;
@@ -1307,7 +1295,7 @@ section { padding: 120px 60px; }
       workThumbs.forEach((t, i) => t.classList.toggle('active', i === index));
     }
 
-    workThumbs.forEach((thumb, i) => thumb.addEventListener('click', () => setWork(i)));
+    setWork(0);
 
     const workLightbox = document.getElementById('workLightbox');
     const lbImg    = document.getElementById('lbImg');
