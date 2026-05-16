@@ -695,7 +695,8 @@
   }
   .work-lightbox-img {
     width: 100%;
-    max-height: calc(100dvh - 160px);
+    max-height: 75vh;
+    height: 600px;
     object-fit: contain;
     display: block;
     background: white;
@@ -718,7 +719,7 @@
     text-overflow: ellipsis;
   }
   .work-lightbox-close {
-    position: fixed; top: 16px; right: 16px;
+    position: fixed; top: 30px; right: 30px;
     width: 40px; height: 40px; border-radius: 50%;
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.22);
@@ -739,13 +740,15 @@
     z-index: 99999;
   }
   .work-lightbox-nav:hover { background: rgba(255,255,255,0.25); }
-  .work-lightbox-prev { left: 12px; }
-  .work-lightbox-next { right: 12px; }
+  .work-lightbox-prev { left: 30px; }
+  .work-lightbox-next { right: 30px; }
   .work-lightbox-counter {
     font-size: 0.72rem; letter-spacing: 0.1em;
     color: rgba(255,255,255,0.45); white-space: nowrap; flex-shrink: 0;
   }
-
+  .work-lightbox-mobile-nav {
+    display: none;
+  }
   .contact-footer {
     background: var(--brown-dark);
     padding: 100px 60px;
@@ -944,10 +947,40 @@
       overflow-y: auto;
     }
     .work-lightbox-inner { padding: 0 8px; }
-    .work-lightbox-img { max-height: calc(100svh - 140px); }
-    .work-lightbox-nav { width: 36px; height: 36px; font-size: 1.1rem; }
-    .work-lightbox-prev { left: 6px; }
-    .work-lightbox-next { right: 6px; }
+    .work-lightbox-img { max-height: 60vh; height: 150px; }
+    .work-lightbox-nav { display: none; }
+
+    .work-lightbox-mobile-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 8px 0;
+      gap: 12px;
+    }
+    .work-lightbox-mobile-btn {
+      flex: 1;
+      height: 52px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 8px;
+      color: white;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .work-lightbox-mobile-btn:active { background: rgba(255,255,255,0.22); }
+    .work-lightbox-mobile-counter {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+      text-align: center;
+      flex-shrink: 0;
+      min-width: 44px;
+    }
 
     .contact-footer { grid-template-columns: 1fr; gap: 36px; padding: 72px 24px; }
     .contact-aside { text-align: left; }
@@ -969,8 +1002,7 @@
     .exit-card { padding: 40px 24px; }
     .exit-headline { font-size: 1.6rem; }
     .work-thumbs { gap: 6px; }
-    .work-lightbox-img { max-height: calc(100svh - 120px); }
-    .work-lightbox-nav { width: 32px; height: 32px; font-size: 1rem; }
+    .work-lightbox-img { max-height: 55vh; }
   }
 
   @media (pointer: coarse) {
@@ -1176,6 +1208,11 @@
         <div class="work-lightbox-title" id="lbTitle"></div>
         <div class="work-featured-tags" id="lbTags"></div>
         <div class="work-lightbox-counter" id="lbCounter"></div>
+      </div>
+      <div class="work-lightbox-mobile-nav">
+        <button class="work-lightbox-mobile-btn" id="lbPrevMobile" aria-label="Forrige">‹</button>
+        <div class="work-lightbox-mobile-counter" id="lbCounterMobile"></div>
+        <button class="work-lightbox-mobile-btn" id="lbNextMobile" aria-label="Næste">›</button>
       </div>
     </div>
   </div>
@@ -1489,11 +1526,12 @@
     );
 
     const workLightbox = document.getElementById('workLightbox');
-    const lbImg     = document.getElementById('lbImg');
-    const lbUrl     = document.getElementById('lbUrl');
-    const lbTitle   = document.getElementById('lbTitle');
-    const lbTags    = document.getElementById('lbTags');
-    const lbCounter = document.getElementById('lbCounter');
+    const lbImg        = document.getElementById('lbImg');
+    const lbUrl        = document.getElementById('lbUrl');
+    const lbTitle      = document.getElementById('lbTitle');
+    const lbTags       = document.getElementById('lbTags');
+    const lbCounter    = document.getElementById('lbCounter');
+    const lbCounterMob = document.getElementById('lbCounterMobile');
     let lbData = [];
     let lbActive = 0;
 
@@ -1510,12 +1548,15 @@
       lbUrl.textContent = d.url;
       lbTitle.textContent = d.title;
       lbTags.innerHTML = d.tags.map(t => `<span class="work-tag" style="border-color:rgba(201,168,130,0.35);color:var(--tan)">${t}</span>`).join('');
-      lbCounter.textContent = `${lbActive + 1} / ${lbData.length}`;
+      const counter = `${lbActive + 1} / ${lbData.length}`;
+      lbCounter.textContent = counter;
+      lbCounterMob.textContent = counter;
     }
 
     function closeLightbox() { workLightbox.classList.remove('active'); }
 
     document.getElementById('lbClose').addEventListener('click', closeLightbox);
+
     document.getElementById('lbPrev').addEventListener('click', () => {
       lbActive = (lbActive - 1 + lbData.length) % lbData.length;
       renderLightbox();
@@ -1524,6 +1565,29 @@
       lbActive = (lbActive + 1) % lbData.length;
       renderLightbox();
     });
+
+    document.getElementById('lbPrevMobile').addEventListener('click', () => {
+      lbActive = (lbActive - 1 + lbData.length) % lbData.length;
+      renderLightbox();
+    });
+    document.getElementById('lbNextMobile').addEventListener('click', () => {
+      lbActive = (lbActive + 1) % lbData.length;
+      renderLightbox();
+    });
+
+    function openLightbox(data, index) {
+      lbData = data;
+      lbActive = index;
+      renderLightbox();
+      workLightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      workLightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
     workLightbox.addEventListener('click', e => { if (e.target === workLightbox) closeLightbox(); });
     document.addEventListener('keydown', e => {
       if (!workLightbox.classList.contains('active')) return;
