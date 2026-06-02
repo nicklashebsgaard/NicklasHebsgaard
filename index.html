@@ -470,6 +470,63 @@
     color: #5a4030;
     max-width: 600px;
   }
+  .testimonials-section { background-color: var(--brown-dark); color: var(--cream); padding: 120px 20px 60px 20px; }
+  .testimonials-container { max-width: 1200px; margin: 0 auto; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .testimonial-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(245, 237, 227, 0.1);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .testimonial-card.featured {
+    grid-column: span 2;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    color: var(--tan);
+    line-height: 0.1;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testimonial-card.featured .quote-text {
+    font-size: 1.5rem;
+  }
+
+  .quote-author {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    margin: 0;
+  }
+
+  .quote-author span {
+    opacity: 0.6;
+    text-transform: none;
+    letter-spacing: normal;
+  }
 
   .pullquote-divider {
     background: var(--brown-dark);
@@ -746,9 +803,8 @@
     font-size: 0.72rem; letter-spacing: 0.1em;
     color: rgba(255,255,255,0.45); white-space: nowrap; flex-shrink: 0;
   }
-  .work-lightbox-mobile-nav {
-    display: none;
-  }
+  .work-lightbox-mobile-nav { display: none; }
+
   .contact-footer {
     background: var(--brown-dark);
     padding: 100px 60px;
@@ -935,7 +991,7 @@
     .timeline { padding-left: 30px; }
     .timeline-item::before { left: -25px; }
 
-    .pullquote-divider { padding: 60px 24px; }
+    .pullquote-divider { padding: 10px 24px 60px 24px; }
 
     .work-section { padding: 72px 24px; }
     .work-featured-meta { flex-direction: column; gap: 12px; }
@@ -946,8 +1002,8 @@
       align-items: flex-start;
       overflow-y: auto;
     }
-    .work-lightbox-inner { padding: 0 8px; }
-    .work-lightbox-img { max-height: 60vh; height: 150px; }
+    .work-lightbox-inner { padding: 20px 8px; }
+    .work-lightbox-img { max-height: 60vh; height: auto;}
     .work-lightbox-nav { display: none; }
 
     .work-lightbox-mobile-nav {
@@ -982,6 +1038,13 @@
       min-width: 44px;
     }
 
+    .testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .testimonial-card.featured {
+      grid-column: span 2;
+    }
+
     .contact-footer { grid-template-columns: 1fr; gap: 36px; padding: 72px 24px; }
     .contact-aside { text-align: left; }
     .exit-card { padding: 44px 32px; }
@@ -998,6 +1061,8 @@
     .section-title { margin-bottom: 40px; }
     .timeline { padding-left: 20px; }
     .timeline-item::before { opacity: 1; left: -28px; top: 6px; width: 7px; height: 7px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 20px; }
+    .testimonial-card.featured { grid-column: span 1; }
     .cta-link { display: block; margin-right: 0; margin-bottom: 16px; }
     .exit-card { padding: 40px 24px; }
     .exit-headline { font-size: 1.6rem; }
@@ -1072,10 +1137,12 @@
           <div class="contact-icon">☎</div>
           <span>+45 27 82 41 13</span>
         </a>
-        <div class="contact-item">
-          <div class="contact-icon">⌂</div>
-          <span>Auning</span>
-        </div>
+        <a href="https://www.google.com/maps/place/8963+Auning/@56.4316044,10.3679067,2810m/data=!3m2!1e3!4b1!4m6!3m5!1s0x464c21329a788911:0x930bed62b0e69c45!8m2!3d56.430596!4d10.376553!16s%2Fm%2F0r4l00p?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D" class="contact-item">
+          <div class="contact-item">
+            <div class="contact-icon">⌂</div>
+            <span>Auning</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -1095,12 +1162,12 @@
           <div class="stat-label">År hos Heyloyalty</div>
         </div>
         <div class="stat-box">
-          <span class="stat-num" data-count="2">0</span>
-          <div class="stat-label">SaaS produkter</div>
+          <span class="stat-num" data-count="500">0</span>
+          <div class="stat-label">E-mail templates</div>
         </div>
         <div class="stat-box">
-          <span class="stat-num" data-count="10">0</span>
-          <div class="stat-label">Projekter i prod.</div>
+          <span class="stat-num" data-count="4300">0</span>
+          <div class="stat-label">Udviklingstimer</div>
         </div>
       </div>
     </div>
@@ -1180,6 +1247,41 @@
         <div class="timeline-title">Servicetekniker</div>
         <div class="timeline-org">Hotel</div>
         <p class="timeline-desc">Tre år som servicetekniker på hotel gav mig stærke kompetencer inden for ansvarlighed, servicemindset og løsningsorientering. Da Corona ændrede fremtiden, valgte jeg at satse fuldt ud på webudvikling - og det fortryder jeg ikke.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <div class="testimonials-container">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 60px; font-style: italic;">
+        Ord fra kolleger
+      </h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card featured">
+          <span class="quote-mark">“</span>
+          <p class="quote-text">Nicklas er en sjældent dygtig udvikler, der formår at tænke forretning og kode sammen. Han har leveret kritiske arkitektoniske løsninger på vores SaaS-platform og er samtidig en fantastisk holdspiller, man altid kan regne med.</p>
+          <p class="quote-author">Simon Korshøj — <span>CTO, Head of Development</span></p>
+        </div>
+        <div class="testimonial-card">
+          <span class="quote-mark">“</span>
+          <p class="quote-text">Du er en af dem, der gør det rart at møde ind. God energi, hjælpsom uden at blive bedt om det, og en kollega der løfter stemningen lige så meget som designet.</p>
+          <p class="quote-author">Lucca — <span>Senior Developer</span></p>
+        </div>
+        <!-- <div class="testimonial-card">
+          <span class="quote-mark">“</span>
+          <p class="quote-text">Nicklas tager et enormt ejerskab på sine opgaver. Han formår at omsætte tunge logikker til stabile, brugervenlige flows.</p>
+          <p class="quote-author">Tina Hansen — <span>Product Owner</span></p>
+        </div>
+        <div class="testimonial-card">
+          <span class="quote-mark">“</span>
+          <p class="quote-text">Hans sans for detaljer i frontend-udviklingen har løftet vores visuelle kvalitet markant.</p>
+          <p class="quote-author">Kristian Thomsen — <span>UI/UX Designer</span></p>
+        </div>
+        <div class="testimonial-card">
+          <span class="quote-mark">“</span>
+          <p class="quote-text">Enestående arbejdsmoral og en kollega, der aktivt bidrager til en høj medarbejdertrivsel.</p>
+          <p class="quote-author">Elena Schmidt — <span>HR Manager</span></p>
+        </div> -->
       </div>
     </div>
   </section>
@@ -1540,6 +1642,7 @@
       lbActive = index;
       renderLightbox();
       workLightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
     function renderLightbox() {
@@ -1553,7 +1656,10 @@
       lbCounterMob.textContent = counter;
     }
 
-    function closeLightbox() { workLightbox.classList.remove('active'); }
+    function closeLightbox() {
+      workLightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
 
     document.getElementById('lbClose').addEventListener('click', closeLightbox);
 
@@ -1574,19 +1680,6 @@
       lbActive = (lbActive + 1) % lbData.length;
       renderLightbox();
     });
-
-    function openLightbox(data, index) {
-      lbData = data;
-      lbActive = index;
-      renderLightbox();
-      workLightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      workLightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
 
     workLightbox.addEventListener('click', e => { if (e.target === workLightbox) closeLightbox(); });
     document.addEventListener('keydown', e => {
