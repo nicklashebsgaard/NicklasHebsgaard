@@ -470,60 +470,68 @@
     color: #5a4030;
     max-width: 600px;
   }
-  .testimonials-section { background-color: var(--brown-dark); color: var(--cream); padding: 120px 20px 60px 20px; }
-  .testimonials-container { max-width: 1200px; margin: 0 auto; }
+
+  .testimonials-section {
+    background-color: var(--brown-dark);
+    color: var(--cream);
+    padding: 120px 20px 80px 20px;
+  }
+  .testimonials-container { max-width: 1100px; margin: 0 auto; }
+
   .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    columns: 2;
+    column-gap: 28px;
   }
 
   .testimonial-card {
-    background: rgba(255, 255, 255, 0.03);
+    break-inside: avoid;
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(245, 237, 227, 0.1);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 36px 40px 32px;
+    margin-bottom: 28px;
+    display: block;
   }
 
   .testimonial-card.featured {
-    grid-column: span 2;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(201, 168, 130, 0.2);
   }
 
   .quote-mark {
     font-family: 'Playfair Display', serif;
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: var(--tan);
-    line-height: 0.1;
-    margin-bottom: 10px;
+    line-height: 0.8;
     display: block;
+    opacity: 0.7;
   }
 
   .quote-text {
     font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
+    line-height: 1.7;
     margin-bottom: 24px;
     font-style: italic;
+    color: var(--cream);
   }
 
   .testimonial-card.featured .quote-text {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .quote-author {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--cream);
+    color: var(--tan);
     margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(245, 237, 227, 0.08);
   }
 
   .quote-author span {
-    opacity: 0.6;
+    opacity: 0.55;
     text-transform: none;
     letter-spacing: normal;
   }
@@ -1038,13 +1046,6 @@
       min-width: 44px;
     }
 
-    .testimonials-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .testimonial-card.featured {
-      grid-column: span 2;
-    }
-
     .contact-footer { grid-template-columns: 1fr; gap: 36px; padding: 72px 24px; }
     .contact-aside { text-align: left; }
     .exit-card { padding: 44px 32px; }
@@ -1061,8 +1062,8 @@
     .section-title { margin-bottom: 40px; }
     .timeline { padding-left: 20px; }
     .timeline-item::before { opacity: 1; left: -28px; top: 6px; width: 7px; height: 7px; }
-    .testimonials-grid { grid-template-columns: 1fr; gap: 20px; }
-    .testimonial-card.featured { grid-column: span 1; }
+    .testimonials-grid { columns: 1; }
+    .testimonial-card { padding: 28px 24px 24px; }
     .cta-link { display: block; margin-right: 0; margin-bottom: 16px; }
     .exit-card { padding: 40px 24px; }
     .exit-headline { font-size: 1.6rem; }
@@ -1129,7 +1130,7 @@
         Jeg skaber <strong>præcise, levende</strong> og brugerfokuserede web-oplevelser - med øje for detaljen og <strong>passion for frontend.</strong>
       </p>
       <div class="hero-contacts">
-        <a href="mailto:Nicklashebsgaard@gmail.com" class="contact-item">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Nicklashebsgaard@gmail.com&su=Hej%20Nicklas%20%E2%80%93%20jeg%20vil%20gerne%20tage%20en%20snak" target="_blank" rel="noopener" class="contact-item">
           <div class="contact-icon">✉</div>
           <span>Nicklashebsgaard@gmail.com</span>
         </a>
@@ -1137,7 +1138,7 @@
           <div class="contact-icon">☎</div>
           <span>+45 27 82 41 13</span>
         </a>
-        <a href="https://www.google.com/maps/place/8963+Auning/@56.4316044,10.3679067,2810m/data=!3m2!1e3!4b1!4m6!3m5!1s0x464c21329a788911:0x930bed62b0e69c45!8m2!3d56.430596!4d10.376553!16s%2Fm%2F0r4l00p?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D" class="contact-item">
+        <a href="https://www.google.com/maps/place/8963+Auning/@56.4316044,10.3679067,2810m/data=!3m2!1e3!4b1!4m6!3m5!1s0x464c21329a788911:0x930bed62b0e69c45!8m2!3d56.430596!4d10.376553!16s%2Fm%2F0r4l00p?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="contact-item">
           <div class="contact-icon">⌂</div>
           <span>Auning</span>
         </a>
@@ -1257,29 +1258,42 @@
       <div class="testimonials-grid">
         <div class="testimonial-card reveal featured">
           <span class="quote-mark reveal">“</span>
-          <p class="quote-text reveal">Nicklas er en sjældent dygtig udvikler, der formår at tænke forretning og kode sammen. Han har leveret kritiske arkitektoniske løsninger på vores SaaS-platform og er samtidig en fantastisk holdspiller, man altid kan regne med.</p>
-          <p class="quote-author reveal">Simon Korshøj — <span>CTO, Head of Development</span></p>
+          <p class="quote-text reveal">Nicklas er ikke bare en god kollega der hjælper til at skabe en god stemning han tør også udfordre ting indenfor hans niche når nogen med en højere title tager beslutninger han er uenig i. Dog uden at bære nag om det ender i eller imod hans favør.</p>
+          <p class="quote-author">Simon Korshøj — <span>CTO, Head of Development</span><br><span style="opacity:0.4; font-size:0.72rem; letter-spacing:0.08em;">Kontakt: 25 39 50 67</span></p>
         </div>
         <div class="testimonial-card reveal">
           <span class="quote-mark reveal">“</span>
           <p class="quote-text reveal">Du er en af dem, der gør det rart at møde ind. God energi, hjælpsom uden at blive bedt om det, og en kollega der løfter stemningen lige så meget som designet.</p>
-          <p class="quote-author reveal">Lucca — <span>Senior Developer</span></p>
-        </div>
-        <!-- <div class="testimonial-card reveal">
-          <span class="quote-mark reveal">“</span>
-          <p class="quote-text reveal">Nicklas tager et enormt ejerskab på sine opgaver. Han formår at omsætte tunge logikker til stabile, brugervenlige flows.</p>
-          <p class="quote-author reveal">Tina Hansen — <span>Product Owner</span></p>
+          <p class="quote-author reveal">Lucca Borch — <span>Softwarre Engineer</span></p>
         </div>
         <div class="testimonial-card reveal">
           <span class="quote-mark reveal">“</span>
-          <p class="quote-text reveal">Hans sans for detaljer i frontend-udviklingen har løftet vores visuelle kvalitet markant.</p>
-          <p class="quote-author reveal">Kristian Thomsen — <span>UI/UX Designer</span></p>
+          <p class="quote-text reveal">Jeg har haft fornøjelsen af at arbejde sammen med Nicklas hos Heyloyalty i omkring 3,5 år. Jeg har ikke været hans direkte leder, men har som ansvarlig for Frontend været en af de personer, han oftest har sparret med i det daglige arbejde. Derfor har jeg også haft et godt indblik i hans dagligdag og måde at arbejde på.
+            I starten af vores samarbejde, hjalp Nicklas mig med at redesigne det e-mail marketing system, vi udvikler på. Senere tog han ansvaret for udviklingen af e-mailskabeloner til vores kunder – en opgave der både krævede teknisk forståelse, tæt dialog med Customer Success-teamet og evnen til at omsætte kundernes ønsker til gode løsninger.
+            Det, jeg især sætter pris på ved at arbejde sammen med Nicklas, er hans positive tilgang og gode samarbejdsevner. Han er nem at arbejde sammen med, tager ansvar for sine opgaver og går til dem med et godt gåpåmod. Samtidig er han god til at holde sig til de aftalte rammer, men tør også komme med egne idéer og input, når det kan forbedre løsningen.
+            Jeg har altid oplevet Nicklas som en hjælpsom, engageret og hyggelig kollega, og jeg kan varmt anbefale ham.</p>
+          <p class="quote-author reveal">Mathias Kristensen — <span>Softwarre Engineer</span></p>
         </div>
         <div class="testimonial-card reveal">
           <span class="quote-mark reveal">“</span>
-          <p class="quote-text reveal">Enestående arbejdsmoral og en kollega, der aktivt bidrager til en høj medarbejdertrivsel.</p>
-          <p class="quote-author reveal">Elena Schmidt — <span>HR Manager</span></p>
-        </div> -->
+          <p class="quote-text reveal">Jeg har haft fornøjelsen af at arbejde sammen med Nicklas, som altid bidrager med en positiv energi og en god stemning på arbejdspladsen. Han er en mødestabil og pålidelig kollega, som man altid kan regne med. Som holdspiller er han hjælpsom, samarbejdsorienteret og bidrager aktivt til et godt fællesskab i teamet. Fagligt er han særligt stærk inden for frontend-udvikling. Han har et skarpt øje for design og brugeroplevelse og formår at omsætte idéer til elegante, brugervenlige og visuelt flotte løsninger.</p>
+          <p class="quote-author reveal">Cecilie Johansen — <span>Junior Product Specialist</span></p>
+        </div>
+        <div class="testimonial-card reveal">
+          <span class="quote-mark reveal">“</span>
+          <p class="quote-text reveal">Nicklas Hebsgaard har et skarpt øje for selv de mindste grafiske uhensigtsmæssigheder og detaljer. Man kan tydeligt mærke han brænder for at skabe noget der både bliver gjort effektivt og som også skaber en god oplevelse for kunderne. Selv på områder som han kan finde svære at arbejde med eller forstå udviser han en vilje til at lære og udvikle sig, og søger hjælp ved sine kolleger når der er behov for det. Nicklas har øje for at både processer bliver overholdt og opsat, ikke kun med tanke på sig selv men også på hans kolleger. Han formår altid at skabe glæde omkring sig og er en behagelig, hjertevarm og imødekommende person.</p>
+          <p class="quote-author reveal">Kennet Najbjerg — <span>Junior Softwarre Engineer</span></p>
+        </div>
+        <div class="testimonial-card reveal">
+          <span class="quote-mark reveal">“</span>
+          <p class="quote-text reveal">Nicklas Hebsgaard er en god kollega, der altid er klar på at give en hånd med, uanset opgavens størrelse/omfang. Han bidrager også altid til den gode stemning på kontoret.</p>
+          <p class="quote-author reveal">Nicklas Thomsen — <span>Softwarre Engineer</span></p>
+        </div>
+        <div class="testimonial-card reveal">
+          <span class="quote-mark reveal">“</span>
+          <p class="quote-text reveal">Nicklas er en god kollega, som er let at arbejde sammen med og altid er god for et grin. Det har været godt at have Nicklas på holdet, både i et fagligt og socialt henseende. Han er en holdspiller, der byder ind - jeg har aldrig set Nicklas få tildelt en curve ball, som han ikke har svunget på.</p>
+          <p class="quote-author reveal">Anders Lund — <span>Junior Product Specialist</span></p>
+        </div>
       </div>
     </div>
   </section>
@@ -1384,7 +1398,7 @@
       <p class="section-label reveal">Kontakt</p>
       <h2 class="section-title reveal">Lad os tage<br>en snak</h2>
       <div class="reveal">
-        <a href="mailto:Nicklashebsgaard@gmail.com" class="cta-link">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Nicklashebsgaard@gmail.com&su=Hej%20Nicklas%20%E2%80%93%20jeg%20vil%20gerne%20tage%20en%20snak" target="_blank" rel="noopener" class="cta-link">
           Nicklashebsgaard@gmail.com <span class="cta-arrow">→</span>
         </a>
         <a href="tel:+4527824113" class="cta-link">
@@ -1730,6 +1744,12 @@
     exitDismiss.addEventListener('click', hideExit);
     exitOverlay.addEventListener('click', e => { if (e.target === exitOverlay) hideExit(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') hideExit(); });
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12') { e.preventDefault(); return; }
+      if (e.ctrlKey && ['u','s','U','S'].includes(e.key)) { e.preventDefault(); return; }
+      if (e.ctrlKey && e.shiftKey && ['i','I','j','J','c','C'].includes(e.key)) { e.preventDefault(); return; }
+    });
   </script>
 </body>
 </html>
