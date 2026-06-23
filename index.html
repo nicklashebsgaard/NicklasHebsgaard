@@ -9,6 +9,7 @@
 <meta property="og:description" content="Frontend udvikler med 3+ år hos Heyloyalty. Specialiseret i Laravel, Livewire, Alpine.js og avancerede e-mail templates.">
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
 <style>
   :root {
     --brown-dark: #3a2318;
@@ -377,12 +378,13 @@
     gap: 16px;
   }
   .skill-card {
+    text-decoration: none;
     border: 1px solid rgba(201,168,130,0.2);
     padding: 24px 20px;
     display: flex; flex-direction: column; align-items: center; gap: 12px;
     transition: all 0.3s ease;
     position: relative; overflow: hidden;
-    cursor: default;
+    cursor: pointer;
   }
   .skill-card::before {
     content: '';
@@ -392,7 +394,8 @@
   }
   .skill-card:hover::before { height: 100%; }
   .skill-card:hover { border-color: var(--tan); transform: translateY(-4px); }
-  .skill-icon { font-size: 1.6rem; position: relative; z-index: 1; }
+  .skill-icon { font-size: 1.8rem; position: relative; z-index: 1; color: var(--cream); display: flex; align-items: center; justify-content: center; }
+  .skill-icon svg { width: 28px; height: 28px; stroke: var(--cream); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
   .skill-name {
     font-size: 0.82rem;
     letter-spacing: 0.1em;
@@ -1131,15 +1134,15 @@
       </p>
       <div class="hero-contacts">
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Nicklashebsgaard@gmail.com&su=Hej%20Nicklas%20%E2%80%93%20jeg%20vil%20gerne%20tage%20en%20snak" target="_blank" rel="noopener" class="contact-item">
-          <div class="contact-icon">✉</div>
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
           <span>Nicklashebsgaard@gmail.com</span>
         </a>
         <a href="tel:+4527824113" class="contact-item">
-          <div class="contact-icon">☎</div>
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.47 2 2 0 0 1 3.58 1.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6 6l1.27-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
           <span>+45 27 82 41 13</span>
         </a>
         <a href="https://www.google.com/maps/place/8963+Auning/@56.4316044,10.3679067,2810m/data=!3m2!1e3!4b1!4m6!3m5!1s0x464c21329a788911:0x930bed62b0e69c45!8m2!3d56.430596!4d10.376553!16s%2Fm%2F0r4l00p?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="contact-item">
-          <div class="contact-icon">⌂</div>
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <span>Auning</span>
         </a>
       </div>
@@ -1181,21 +1184,21 @@
     <p class="section-label reveal">Kompetencer</p>
     <h2 class="section-title reveal">Hvad jeg bringer<br>til bordet</h2>
     <div class="skills-grid">
-      <div class="skill-card reveal"><div class="skill-icon">🐘</div><div class="skill-name">Laravel</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">⚛️</div><div class="skill-name">React</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">📜</div><div class="skill-name">JavaScript</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🖥️</div><div class="skill-name">Frontend</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🎯</div><div class="skill-name">UX / UI</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🎨</div><div class="skill-name">CSS / SASS</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🧱</div><div class="skill-name">HTML</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🔍</div><div class="skill-name">SEO</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🌐</div><div class="skill-name">WordPress</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🔌</div><div class="skill-name">Dataservices</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">⚙️</div><div class="skill-name">Server-side</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🔥</div><div class="skill-name">Livewire</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">🏔️</div><div class="skill-name">Alpine.js</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">💧</div><div class="skill-name">Liquid</div></div>
-      <div class="skill-card reveal"><div class="skill-icon">✉️</div><div class="skill-name">E-mail templates</div></div>
+      <a href="https://laravel.com" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><i class="devicon-laravel-plain"></i></div><div class="skill-name">Laravel</div></a>
+      <a href="https://react.dev" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><i class="devicon-react-original"></i></div><div class="skill-name">React</div></a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><i class="devicon-javascript-plain"></i></div><div class="skill-name">JavaScript</div></a>
+      <a href="https://developer.mozilla.org/en-US/docs/Learn/Front-end_web_developer" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="skill-name">Frontend</div></a>
+      <a href="https://www.figma.com" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div><div class="skill-name">UX / UI</div></a>
+      <a href="https://sass-lang.com" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><i class="devicon-sass-original"></i></div><div class="skill-name">CSS / SASS</div></a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><i class="devicon-html5-plain"></i></div><div class="skill-name">HTML</div></a>
+      <a href="https://developers.google.com/search/docs" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div><div class="skill-name">SEO</div></a>
+      <a href="https://wordpress.org" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><i class="devicon-wordpress-plain"></i></div><div class="skill-name">WordPress</div></a>
+      <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg></div><div class="skill-name">Dataservices</div></a>
+      <a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg></div><div class="skill-name">Server-side</div></a>
+      <a href="https://livewire.laravel.com" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="skill-name">Livewire</div></a>
+      <a href="https://alpinejs.dev" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><i class="devicon-alpinejs-plain"></i></div><div class="skill-name">Alpine.js</div></a>
+      <a href="https://shopify.dev/docs/api/liquid" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6c-2.21 0-4 1.79-4 4 0 1.64.99 3.09 2.44 3.73C9.54 14.36 9 15.62 9 17h6c0-1.38-.54-2.64-1.44-3.27C14.01 13.09 15 11.64 15 10c0-2.21-1.79-4-3-4z" stroke-width="1.2"/></svg></div><div class="skill-name">Liquid</div></a>
+      <a href="https://mjml.io" target="_blank" rel="noopener" class="skill-card reveal"><div class="skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div><div class="skill-name">E-mail templates</div></a>
     </div>
     <div class="skills-tags-row">
       <span class="skill-tag reveal">Digital handel</span>
